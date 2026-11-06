@@ -53,6 +53,47 @@
 15  popr r5 r15           # Restore n
 
 ################################################################################
+# SECOND FUNCTION CALL: CALCULATE k!
+################################################################################
+
+16  pushr r5 r15          # Save n on the stack
+17  pushr r6 r15          # Save k on the stack
+18  pushr r7 r15          # Save n factorial
+19  copy r1 r6            # Pass k to factorial
+20  calln r14 47          # Call factorial function
+21  copy r8 r13           # Save the returned k factorial
+22  popr r7 r15           # Restore n factorial
+23  popr r6 r15           # Restore k
+24  popr r5 r15           # Restore n
+
+################################################################################
+# THIRD FUNCTION CALL: CALCULATE (n-k)!
+################################################################################
+
+25  pushr r5 r15          # Save n on the stack
+26  pushr r6 r15          # Save k on the stack
+27  pushr r7 r15          # Save n factorial
+28  pushr r8 r15          # Save k factorial
+29  sub r1 r5 r6          # Calculate n-k for factorial
+30  calln r14 47          # Call factorial function
+31  copy r9 r13           # Save the returned (n-k) factorial
+32  popr r8 r15            # Restore k factorial
+33  popr r7 r15            # Restore n factorial
+34  popr r6 r15            # Restore k
+35  popr r5 r15            # Restore n
+
+
+################################################################################
+# FINAL CALCULATIONS FOR C(n,k)
+################################################################################
+
+36  mul r10 r8 r9          # Calculate k! times (n-k)!
+37  div r11 r7 r10         # Divide n! by the denominator
+38  write r11              # Display the combination result
+39  halt                   # Stop the program
+
+
+################################################################################
 # read n, print n, and stop
 ################################################################################
 0 read  r1 # read n
