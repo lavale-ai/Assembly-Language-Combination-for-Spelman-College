@@ -30,6 +30,17 @@
 2   read r6              # Get k from the user
 
 ################################################################################
+# VALIDATE USER INPUT
+################################################################################
+
+3   jltzn r5 40           # Reject n if negative
+4   jeqzn r5 40           # Reject n if zero
+5   jltzn r6 40           # Reject k if negative
+6   jeqzn r6 40           # Reject k if zero
+7   sub r4 r5 r6          # Calculate n-k
+8   jltzn r4 40           # Reject k greater than n
+
+################################################################################
 # read n, print n, and stop
 ################################################################################
 0 read  r1 # read n
