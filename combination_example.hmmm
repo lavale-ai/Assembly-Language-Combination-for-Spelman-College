@@ -41,6 +41,18 @@
 8   jltzn r4 40           # Reject k greater than n
 
 ################################################################################
+# FIRST FUNCTION CALL: CALCULATE n!
+################################################################################
+
+9   pushr r5 r15          # Save n on the stack
+10  pushr r6 r15          # Save k on the stack
+11  copy r1 r5            # Pass n to factorial
+12  calln r14 47          # Call factorial function
+13  copy r7 r13           # Save the returned n factorial
+14  popr r6 r15           # Restore k
+15  popr r5 r15           # Restore n
+
+################################################################################
 # read n, print n, and stop
 ################################################################################
 0 read  r1 # read n
