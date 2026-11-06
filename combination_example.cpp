@@ -41,6 +41,14 @@ cin >> n;
 
 cout << "Enter k: ";
 cin >> k;
+    
+// Check for invalid input
+if (n <= 0 || k <= 0 || k > n)
+{
+    cout << "result = -1" << endl;
+    return 0;
+}
+
 
 
     // get and validate user input
