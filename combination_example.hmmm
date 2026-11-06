@@ -1,101 +1,133 @@
+
 ################################################################################
 # Combinations C(n,k) solution
 # Lavale Degraffenreid
 ################################################################################
 
 ################################################################################
-# register usage
-# STUDENTS MUST EXPLAIN ALL REGISTERS THEY USE AND FOR WHAT PURPOSE HERE
+# REGISTER USAGE
 ################################################################################
-# r1-r4  = Function arguments and temporary calculations
-# r5     = n
-# r6     = k
+# r1     = Factorial function input
+# r2     = Factorial calculation result
+# r3     = Factorial loop counter
+# r4     = Temporary calculation for factorial loop
+# r5     = n (first user input)
+# r6     = k (second user input)
 # r7     = n factorial
 # r8     = k factorial
-# r9     = (n-k) factorial
-# r10    = Denominator
-# r11    = Final answer
+# r9     = n-k
+# r10    = (n-k) factorial
+# r11    = Denominator: k! * (n-k)!
+# r12    = Final combination answer
 # r13    = Function return value
 # r14    = Function return address
-# r15    = Stack pointer
-
-# STUIDENTS NEED TO ADD THEIR OWN ASSEMBLY CODE HERE
+# r15    = Not used; no stack is needed in this version
 
 ################################################################################
 # GET USER INPUT
 ################################################################################
 
-0   loadn r15 220        # Initialize stack pointer
-1   read r5              # Get n from the user
-2   read r6              # Get k from the user
+0   read r5
+1   read r6
 
 ################################################################################
 # VALIDATE USER INPUT
 ################################################################################
 
-3   jltzn r5 40           # Reject n if negative
-4   jeqzn r5 40           # Reject n if zero
-5   jltzn r6 40           # Reject k if negative
-6   jeqzn r6 40           # Reject k if zero
-7   sub r4 r5 r6          # Calculate n-k
-8   jltzn r4 40           # Reject k greater than n
+2   jltzn r5 40
+3   jltzn r6 40
+4   sub r9 r5 r6
+5   jltzn r9 40
 
 ################################################################################
 # FIRST FUNCTION CALL: CALCULATE n!
 ################################################################################
 
-9   pushr r5 r15          # Save n on the stack
-10  pushr r6 r15          # Save k on the stack
-11  copy r1 r5            # Pass n to factorial
-12  calln r14 47          # Call factorial function
-13  copy r7 r13           # Save the returned n factorial
-14  popr r6 r15           # Restore k
-15  popr r5 r15           # Restore n
+6   copy r1 r5
+7   calln r14 47
+8   copy r7 r13
 
 ################################################################################
 # SECOND FUNCTION CALL: CALCULATE k!
 ################################################################################
 
-16  pushr r5 r15          # Save n on the stack
-17  pushr r6 r15          # Save k on the stack
-18  pushr r7 r15          # Save n factorial
-19  copy r1 r6            # Pass k to factorial
-20  calln r14 47          # Call factorial function
-21  copy r8 r13           # Save the returned k factorial
-22  popr r7 r15           # Restore n factorial
-23  popr r6 r15           # Restore k
-24  popr r5 r15           # Restore n
+9   copy r1 r6
+10  calln r14 47
+11  copy r8 r13
 
 ################################################################################
 # THIRD FUNCTION CALL: CALCULATE (n-k)!
 ################################################################################
 
-25  pushr r5 r15          # Save n on the stack
-26  pushr r6 r15          # Save k on the stack
-27  pushr r7 r15          # Save n factorial
-28  pushr r8 r15          # Save k factorial
-29  sub r1 r5 r6          # Calculate n-k for factorial
-30  calln r14 47          # Call factorial function
-31  copy r9 r13           # Save the returned (n-k) factorial
-32  popr r8 r15            # Restore k factorial
-33  popr r7 r15            # Restore n factorial
-34  popr r6 r15            # Restore k
-35  popr r5 r15            # Restore n
-
+12  copy r1 r9
+13  calln r14 47
+14  copy r10 r13
 
 ################################################################################
 # FINAL CALCULATIONS FOR C(n,k)
 ################################################################################
 
-36  mul r10 r8 r9          # Calculate k! times (n-k)!
-37  div r11 r7 r10         # Divide n! by the denominator
-38  write r11              # Display the combination result
-39  halt                   # Stop the program
-
+15  mul r11 r8 r10
+16  div r12 r7 r11
+17  write r12
+18  halt
 
 ################################################################################
-# read n, print n, and stop
+# RESERVED MEMORY LOCATIONS
 ################################################################################
-0 read  r1 # read n
-1 write r1 # print n
-2 halt     # stop the program
+
+19  nop
+20  nop
+21  nop
+22  nop
+23  nop
+24  nop
+25  nop
+26  nop
+27  nop
+28  nop
+29  nop
+30  nop
+31  nop
+32  nop
+33  nop
+34  nop
+35  nop
+36  nop
+37  nop
+38  nop
+39  nop
+
+################################################################################
+# INVALID INPUT
+################################################################################
+
+40  setn r12 -1
+41  write r12
+42  halt
+
+################################################################################
+# RESERVED MEMORY LOCATIONS
+################################################################################
+
+43  nop
+44  nop
+45  nop
+46  nop
+
+################################################################################
+# FACTORIAL FUNCTION
+# Input: r1
+# Output: r13
+################################################################################
+
+47  setn r2 1
+48  setn r3 1
+49  sub r4 r1 r3
+50  jltzn r4 55
+51  mul r2 r2 r3
+52  addn r3 1
+53  jumpn 49
+54  nop
+55  copy r13 r2
+56  jumpr r14
