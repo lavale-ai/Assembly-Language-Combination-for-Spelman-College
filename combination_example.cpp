@@ -31,7 +31,17 @@ uint16_t factorial(const uint16_t x)
  * *** STUDENTS SHOULD WRITE CODE FOR THIS FUNCTION ***
  */
 int main() {
-    int n;
+    
+int n;
+int k;
+
+// Get user input
+cout << "Enter n: ";
+cin >> n;
+
+cout << "Enter k: ";
+cin >> k;
+
 
     // get and validate user input
     cout << "Enter n: ";
