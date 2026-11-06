@@ -54,9 +54,13 @@ if (n <= 0 || k <= 0 || k > n)
     // get and validate user input
     cout << "Enter n: ";
     cin >> n;
+   
+// Calculate C(n,k) = n! / (k! * (n-k)!)
+uint16_t numerator = factorial(n);
+uint16_t denominator = factorial(k) * factorial(n - k);
 
-    // calculate C(n,k) = n! / (k! * (n-k)!)
-    uint16_t c_n_k = factorial(n);
+uint16_t c_n_k = numerator / denominator;
+
 
     // write out results
     cout << "result = " << c_n_k << endl;
